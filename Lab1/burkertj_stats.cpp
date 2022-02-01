@@ -1,50 +1,62 @@
 #include "burkertj_stats.hpp"
 
-jStats::stats::stats(){
-    this->set_min(0);
-    this->set_max(0);
-    this->set_mean(0);
+jStats::stats::stats(float a, float b, float c){
+    this->min = 0;
+    this->max = 0;
+    this->mean = 0;
 }
 
 void jStats::stats::calc_min(std::vector<float> vector){
-    float min = vector[0];
+    float m = vector[0];
     for (int i : vector){
-        if(vector[i] < min)
-            min = vector[i];
+        if(i < min)
+            m = i;
     }
-    jStats::stats::set_min(min);
+    this->min = m;
 }
 void jStats::stats::calc_max(std::vector<float> vector){
-    float max = vector[0];
+    float m = vector[0];
     for (int i : vector){
-        if(vector[i] > max)
-            max = vector[i];
+        printf("i = %d\n", i);
+        if(i > max)
+            m = i;
     }
-    jStats::stats::set_max(max);
+    this-> max = m;
 }
 void jStats::stats::calc_mean(std::vector<float> vector){
     float sum = 0;
     for(int i : vector){
         sum += vector[i];
     }
-    float mean = sum/vector.size();
-    jStats::stats::set_mean(mean);
-}
-void jStats::stats::calc_stddev(std::vector<float> vector){
-
-}
-void jStats::stats::calc_histogram(std::vector<float> vector){
-
+    float m = sum/vector.size();
+    this->mean = m;
 }
 
-void jStats::stats::set_min(float num){
-    this->min = num;
+float jStats::stats::get_max(){
+    return this->max;
 }
 
-void jStats::stats::set_max(float num){
-    this->max = num;
+float jStats::stats::get_min(){
+    return this->min;
 }
 
-void jStats::stats::set_mean(float num){
-    this->mean = num;
+float jStats::stats::get_mean(){
+    return this->mean;
+}
+
+
+int main(int argc, char* argv[]){
+    std::vector<float> vector = {1,2,5,3,4,6};
+    float m1, m2, m3, max, min, mean;
+    jStats::stats statCalc(m1, m2, m3);
+    statCalc.calc_max(vector);
+    max = statCalc.get_max();
+    printf("Max: %f\n", max);
+    statCalc.calc_min(vector);
+    min = statCalc.get_min();
+    printf("Min: %f\n", min);
+    statCalc.calc_mean(vector);
+    mean = statCalc.get_mean();
+    printf("Mean: %f\n", mean);
+    return 0;
 }

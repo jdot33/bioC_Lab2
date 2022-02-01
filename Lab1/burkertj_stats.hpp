@@ -14,15 +14,15 @@ namespace jStats{
     class stats{
         public:
 
-            stats();
+            stats(float, float, float);
             //stats(std::string name, float init_num_students); //construct myclass with an initial name and number of stuedents
             //stats(std::string name);
 
             float get_min();
             float get_max();
             float get_mean();
-            float get_stddev();
-            float get_histogram();
+            //float get_stddev();
+            //float get_histogram();
 
 
             //std::string get_name();
@@ -34,15 +34,11 @@ namespace jStats{
             void calc_stddev(std::vector<float> vector);
             void calc_histogram(std::vector<float> vector);
 
-            void set_min(float num);
-            void set_max(float num);
-            void set_mean(float num);
-
         private:
             float min;
             float max;
             float mean;
-            float stddev;
-            float histogram;
+            //float stddev;
+            //float histogram;
     };
 }
