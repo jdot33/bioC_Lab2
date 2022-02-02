@@ -26,8 +26,11 @@ void jStats::stats::calc_max(std::vector<float> vector){
 void jStats::stats::calc_mean(std::vector<float> vector){
     float sum = 0;
     for(int i : vector){
-        sum += vector[i];
+        printf("%d: %f + %f\n", i-1, sum, vector[i-1]);
+        sum += vector[i-1];
     }
+    printf("sum = %f\n", sum);
+    printf("vectorsize = %lu\n", vector.size());
     float m = sum/vector.size();
     this->mean = m;
 }
