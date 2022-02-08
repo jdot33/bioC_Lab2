@@ -23,14 +23,14 @@ float jStats::corr::calc_corr_coeff(std::vector<float>* vec1, std::vector<float>
     //cout << "n = " << n << "\n";
     vecStats.calc_mean(vec1);
     mean_vec1 = vecStats.get_mean();
-    cout << mean_vec1 << "\n";
+    //cout << mean_vec1 << "\n";
     vecStats.calc_mean(vec2);
     mean_vec2 = vecStats.get_mean();
-    cout << mean_vec1 << "\n";
+    //cout << mean_vec1 << "\n";
     for(int i = 0; i < n; i++){
         sum += (vec1->at(i)*vec2->at(i));
     }
-    cout << sum << "\n";
+    //cout << sum << "\n";
     float dloop_vec1, dloop_vec2;
     dloop_vec1 = this->denom_loop(vec1);
     dloop_vec2 = this->denom_loop(vec2);

@@ -62,7 +62,7 @@ void jStats::stats::calc_histogram(std::vector<float>* vec){
     }
 
     for(int i = 0; i < vec->size(); i++){
-        for(int j = 0; j < bin_count.size(); j++){
+        for(int j = 0; j < bin_count.size()-1; j++){
             if(vec->at(i) >= bin_edges.at(j) && vec->at(i) < bin_edges.at(j+1)){
                 bin_count.at(j)++;
             }

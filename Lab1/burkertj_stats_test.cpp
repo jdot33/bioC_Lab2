@@ -1,14 +1,22 @@
 #include "burkertj_stats.hpp"
-// #include "burkertj_stats.cpp"
 
 int main(int argc, char* argv[]){
-    std::vector<float> vec = {1,2.01,5,3.2,400.12,6.5, 0.005};
+    std::vector<float> vec;
 
-    std::cout << "The elements of vec are : ";
- 
-    for (int i = 0; i < vec.size(); i++)
-        std::cout << vec.at(i) << ', ';
-    std::cout << '\n';
+    FILE* fin1; 
+    if(fin1 = fopen(argv[1], "r")){
+        float num;
+        fscanf (fin1, "%f", &num);    
+        while (!feof (fin1))
+        {  
+            vec.push_back(num);
+            fscanf (fin1, "%f", &num);      
+        }
+    }
+    else{
+        std::cout << "File does not exist\n";
+    }
+
     float m1, m2, m3, max, min, mean, stddev;
     jStats::stats statCalc(m1, m2, m3);
     statCalc.calc_max(&vec);
