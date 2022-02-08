@@ -1,5 +1,6 @@
-//header for primerClasses_cpp.cpp
 
+#ifndef BURKERTJSTATS_HPP
+#define BURKERTJSTATS_HPP
 
 #include <stdio.h>
 #include <iostream>
@@ -7,7 +8,6 @@
 #include <string>
 #include <vector>
 #include <math.h>
-using namespace std;
 
 //NAMESPACES - std::string is a namespace::class combo. std is namespace, string is class. 
 namespace jStats{
@@ -41,3 +41,5 @@ namespace jStats{
 
     };
 }
+
+#endif
