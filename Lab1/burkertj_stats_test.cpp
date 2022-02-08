@@ -1,5 +1,5 @@
 #include "burkertj_stats.hpp"
-#include "burkertj_stats.cpp"
+// #include "burkertj_stats.cpp"
 
 int main(int argc, char* argv[]){
     std::vector<float> vec = {1,2.01,5,3.2,400.12,6.5, 0.005};

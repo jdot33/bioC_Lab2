@@ -2,8 +2,8 @@
 
 #include "burkertj_corr.hpp"
 #include "burkertj_stats.hpp"
-#include "burkertj_corr.cpp"
-#include "burkertj_stats.cpp"
+// #include "burkertj_corr.cpp"
+// #include "burkertj_stats.cpp"
 using namespace std;
 
 int main(int argc, char* argv[]){
