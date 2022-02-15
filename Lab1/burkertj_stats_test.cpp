@@ -15,6 +15,7 @@ int main(int argc, char* argv[]){
     }
     else{
         std::cout << "File does not exist\n";
+        return 0;
     }
 
     float m1, m2, m3, max, min, mean, stddev;

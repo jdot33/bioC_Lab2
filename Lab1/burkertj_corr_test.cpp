@@ -40,6 +40,7 @@ int main(int argc, char* argv[]){
     jStats::corr corrCalc(ri1);
 
     float corr_co = corrCalc.calc_corr_coeff(&vec, &vec2);
-    std::cout << "correlation coefficient\t:\t" << corr_co << "\n";
+    //std::cout << "correlation coefficient\t:\t" << corr_co << "\n";
+    std::cout << corr_co;
     return 0;
 }

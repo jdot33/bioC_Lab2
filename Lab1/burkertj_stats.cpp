@@ -71,10 +71,11 @@ void jStats::stats::calc_histogram(std::vector<float>* vec){
 
     for(int i = 0; i < bin_edges.size(); i++){
         std::cout << "\n" << bin_edges.at(i) << "\n";
-        for(int j = 0; j < bin_count.at(i); j++){
+        for(int j = 0; j < bin_count.at(i); j+=100){
             std::cout << "=";
         }
     }
+    std::cout << "Each '=' is equivalent to 100 data points\n";
 }
 
 float jStats::stats::get_max(){
