@@ -21,9 +21,7 @@ int get_data(char* filename, std::vector<float>* vec){
         return 0;
     }
     else{
-        //system("color E4");
         std::cout << "ERROR: " << filename << " does not exist\n";
-        //system("color 07");
         return 1;
     }
 }
@@ -59,7 +57,6 @@ int main(int argc, char* argv[]) {
     jVector::vectorops vops;
     jStats::stats statCalc(a, b, c);
 
-    //vops.print_vector(&red_data);
     if(num_genes > red_data.size()){
         std::cout << "ERROR: The requested number of genes is greater than the number of data points\n";
         return 0;
@@ -76,18 +73,12 @@ int main(int argc, char* argv[]) {
     statCalc.calc_mean(&green_data);
     vops.div_vector(&green_data, &green_data, statCalc.get_mean());
 
-    //vops.print_vector(&red_data);
-    //vops.print_vector(&green_data);
-
-
     if(fileout = fopen(calib_data_filename, "w")){
     }
     else{
-        //system("color E4");
         std::cout << "ERROR: " << fileout << " does not exist\n";
-        //system("color 07");
     }
-std::cout << "made it 90\n";
+
     //calc log ratio
     for(int i = 0; i < green_data.size(); i++){
         float logratio =  log10(red_data.at(i)/green_data.at(i));
@@ -104,38 +95,37 @@ std::cout << "made it 90\n";
 
     float d1, d2, d3, old_mean_1, old_mean_2, old_mean_3, criteria;
     criteria = 1;
-//std::cout << "made it 107\n";
+
+    //int runs = 0;
     while(criteria > 0.0001){
         //make sure the clusters are all empty and ready to get new points
         clust1.data.clear();
         clust2.data.clear();
         clust3.data.clear();
+        //runs++;
 
-        //std::cout << "made it 112\n";
         for(float i : all_data){
             d1 = clust1.calc_distance(i);
             d2 = clust2.calc_distance(i);
             d3 = clust3.calc_distance(i);
-            //std::cout << "made it 117\n";
             
             if(d1 <= d2 && d1 <= d3){
                 //Add point to cluster 1
                 clust1.data.push_back(i);
-                //std::cout << "made it 121\n";
             } else if(d2 <= d1 && d2 <= d3){
                 //add point to cluster 2
                 clust2.data.push_back(i);
-                //std::cout << "made it 124\n";
             }
             else{
                 //add point to cluster 3
                 clust3.data.push_back(i);
-                //std::cout << "made it 128\n";
             }
         }
-            std::cout << clust1.data.size() << "\n";
-            std::cout << clust2.data.size() << "\n";
-            std::cout << clust3.data.size() << "\n";
+
+// std::cout << clust1.data.size() << "\n";
+// std::cout << clust2.data.size() << "\n";
+// std::cout << clust3.data.size() << "\n";
+
             //get old mean and calculate new means
             old_mean_1 = clust1.get_mean();
             clust1.calc_mean();
@@ -148,13 +138,54 @@ std::cout << "made it 90\n";
             //std::cout << "Old mean 2: " << old_mean_2 << "\nnew mean 2: " << clust2.get_mean() << "\n";
             //std::cout << "Old mean 3: " << old_mean_3 << "\nnew mean 3: " << clust3.get_mean() << "\n";
 
-            criteria = abs(old_mean_1 - clust1.get_mean()) - abs(old_mean_2 - clust2.get_mean()) - abs(old_mean_3 - clust3.get_mean()); 
-            std::cout << "criteria: " << criteria << "\n";
+            criteria = abs(old_mean_1 - clust1.get_mean()) + abs(old_mean_2 - clust2.get_mean()) + abs(old_mean_3 - clust3.get_mean()); 
+            //std::cout << "criteria: " << criteria << "\n";
             
     }
 
+    //cluster 1 is most negative = suppression, cluster 2 is close to zero = stationary, cluster 3 is most positive = expression.
     std::cout << "cluster 1 mean: " << clust1.get_mean() << "\n";
     std::cout << "cluster 2 mean: " << clust2.get_mean() << "\n";
     std::cout << "cluster 3 mean: " << clust3.get_mean() << "\n";
+    //std::cout << runs << " runs\n";
+    int i = 0;
+    float dpoint;
+    FILE* gene_names; 
+    FILE* suppressed = fopen("suppressed_genes.txt", "w");
+    FILE* stationary = fopen("stationary_genes.txt", "w");
+    FILE* expressed = fopen("expressed_genes.txt", "w");
+    if(gene_names = fopen("./microarray/gene_list.txt", "r")){
+        char line[10];
+        fscanf (gene_names, "%s", line);    
+        while (!feof (gene_names))
+        {  
+            dpoint = all_data[i];
+            d1 = clust1.calc_distance(dpoint);
+            d2 = clust2.calc_distance(dpoint);
+            d3 = clust3.calc_distance(dpoint);
+        
+            if(d1 <= d2 && d1 <= d3){
+                //Add gene to suppressed file
+                fprintf(suppressed, "%s\n", line);
+            } else if(d2 <= d1 && d2 <= d3){
+                //add gene to stationary file
+                fprintf(stationary, "%s\n", line);
+            }
+            else{
+                //add gene to expressed file
+                fprintf(expressed, "%s\n", line);
+            }
+            i++;
+            fscanf (gene_names, "%s", line);      
+        }
+        fclose(gene_names);
+        fclose(suppressed);
+        fclose(stationary);
+        fclose(expressed);
+        return 0;
+    }
+    else{
+        std::cout << "ERROR: gene_list.txt does not exist\n";
+    }
 
 }
