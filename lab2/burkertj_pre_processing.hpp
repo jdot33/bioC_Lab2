@@ -13,6 +13,6 @@
 #ifndef BURKERTJPREPROCESSING_HPP
 #define BURKERTJPREPROCESSING_HPP
 
-
+int get_data(char* filename, std::vector<float>* vec);
 
 #endif

@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include "burkertj_pre_processing.hpp"
 
     namespace jStats {
 
